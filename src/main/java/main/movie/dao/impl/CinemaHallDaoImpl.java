@@ -26,7 +26,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't add cinemaHall to DB!", e);
+            throw new DataProcessingException("Can't add cinemaHall to DB! " + cinemaHall, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -38,8 +38,6 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     public CinemaHall get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.get(CinemaHall.class, id);
-        } catch (Exception e) {
-            throw new RuntimeException("Can't get cinemaHall from DB!", e);
         }
     }
 
