@@ -1,12 +1,12 @@
 package main.movie.service.impl;
 
+import java.util.List;
 import main.movie.dao.CinemaHallDao;
 import main.movie.lib.Inject;
 import main.movie.lib.Service;
 import main.movie.model.CinemaHall;
 import main.movie.service.CinemaHallService;
 
-import java.util.List;
 @Service
 public class CinemaHallServiceImpl implements CinemaHallService {
     @Inject

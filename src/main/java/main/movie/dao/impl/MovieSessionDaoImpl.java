@@ -1,5 +1,12 @@
 package main.movie.dao.impl;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import main.movie.dao.MovieSessionDao;
 import main.movie.exceptions.DataProcessingException;
 import main.movie.lib.Dao;
@@ -8,13 +15,6 @@ import main.movie.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -52,7 +52,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> getAllMovieSessionsQuery = session.createQuery("from MovieSession", MovieSession.class);
+            Query<MovieSession> getAllMovieSessionsQuery = session.createQuery(
+                    "from MovieSession", MovieSession.class);
             return getAllMovieSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all cinemaHalls from DB!", e);
@@ -63,12 +64,14 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<MovieSession> query = criteriaBuilder.createQuery(MovieSession.class);
+            CriteriaQuery<MovieSession> query = criteriaBuilder
+                    .createQuery(MovieSession.class);
             Root<MovieSession> root = query.from(MovieSession.class);
             Predicate idPredicate = criteriaBuilder.equal(root.get("movie"), movieId);
             Predicate datePredicate = criteriaBuilder.between(root.get("showTime"),
                     date.atStartOfDay(), date.atTime(LocalTime.MAX));
-            return session.createQuery(query.where(idPredicate, datePredicate)).getResultList();
+            return session.createQuery(query.where(idPredicate, datePredicate))
+                    .getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find available sessions for movieId = "
                     + movieId + " and date " + date, e);

@@ -1,5 +1,7 @@
 package main.movie;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import main.movie.lib.Injector;
 import main.movie.model.CinemaHall;
 import main.movie.model.Movie;
@@ -7,9 +9,6 @@ import main.movie.model.MovieSession;
 import main.movie.service.CinemaHallService;
 import main.movie.service.MovieService;
 import main.movie.service.MovieSessionService;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Main {
 
@@ -39,7 +38,8 @@ public class Main {
         MovieSession movieSession1 = new MovieSession();
         movieSession1.setCinemaHall(cinemaHall1);
         movieSession1.setMovie(movie1);
-        movieSession1.setShowTime(LocalDateTime.of(2020, 10, 20, 15, 30));
+        movieSession1.setShowTime(LocalDateTime.of(2020, 10,
+                20, 15, 30));
 
         MovieSessionService movieSessionService
                 = (MovieSessionService) injector.getInstance(MovieSessionService.class);
@@ -48,12 +48,15 @@ public class Main {
         MovieSession movieSession2 = new MovieSession();
         movieSession2.setCinemaHall(cinemaHall2);
         movieSession2.setMovie(movie2);
-        movieSession2.setShowTime(LocalDateTime.of(2020, 10, 22, 15, 30));
+        movieSession2.setShowTime(LocalDateTime.of(2020, 10,
+                22, 15, 30));
         movieSessionService.add(movieSession2);
         System.out.println(movieSessionService
-                .findAvailableSessions(1L, LocalDate.of(2020, 10, 20)));
+                .findAvailableSessions(1L, LocalDate.of(2020,
+                        10, 20)));
 
         System.out.println(movieSessionService
-                .findAvailableSessions(2L, LocalDate.of(2020, 10, 22)));
+                .findAvailableSessions(2L, LocalDate.of(2020,
+                        10, 22)));
     }
 }
