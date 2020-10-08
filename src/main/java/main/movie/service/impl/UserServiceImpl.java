@@ -6,6 +6,7 @@ import main.movie.lib.Inject;
 import main.movie.lib.Service;
 import main.movie.model.User;
 import main.movie.service.UserService;
+import main.movie.util.HashUtil;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -14,11 +15,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User add(User user) {
-        return userDao.create(user);
+        user.setSalt(HashUtil.generateSalt());
+        user.setPassword(HashUtil.hashPassword(user.getPassword(), user.getSalt()));
+        return userDao.add(user);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return userDao.getByEmail(email);
+        return userDao.findByEmail(email);
     }
 }
