@@ -25,6 +25,7 @@
         <mapping class="main.movie.model.User" />
         <mapping class="main.movie.model.ShoppingCart" />
         <mapping class="main.movie.model.Ticket" />
+        <mapping class="main.movie.model.Order" />
 
     </session-factory>
 </hibernate-configuration>

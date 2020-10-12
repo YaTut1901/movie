@@ -12,6 +12,7 @@ import main.movie.security.AuthenticationService;
 import main.movie.service.CinemaHallService;
 import main.movie.service.MovieService;
 import main.movie.service.MovieSessionService;
+import main.movie.service.OrderService;
 import main.movie.service.ShoppingCartService;
 import main.movie.service.UserService;
 
@@ -79,5 +80,13 @@ public class Main {
         shoppingCartService.addSession(movieSession1, user);
         shoppingCartService.clear(cart);
         System.out.println(shoppingCartService.getByUser(user));
+
+        OrderService orderService
+                = (OrderService) injector.getInstance(OrderService.class);
+
+        orderService.completeOrder(user);
+        shoppingCartService.addSession(movieSession2, user);
+        orderService.completeOrder(user);
+        System.out.println(orderService.getOrderHistory(user));
     }
 }
