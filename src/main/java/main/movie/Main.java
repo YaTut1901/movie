@@ -6,9 +6,14 @@ import main.movie.lib.Injector;
 import main.movie.model.CinemaHall;
 import main.movie.model.Movie;
 import main.movie.model.MovieSession;
+import main.movie.model.ShoppingCart;
+import main.movie.model.User;
+import main.movie.security.AuthenticationService;
 import main.movie.service.CinemaHallService;
 import main.movie.service.MovieService;
 import main.movie.service.MovieSessionService;
+import main.movie.service.ShoppingCartService;
+import main.movie.service.UserService;
 
 public class Main {
 
@@ -49,7 +54,7 @@ public class Main {
         movieSession2.setCinemaHall(cinemaHall2);
         movieSession2.setMovie(movie2);
         movieSession2.setShowTime(LocalDateTime.of(2020, 10,
-                22, 15, 30));
+                22, 15, 31));
         movieSessionService.add(movieSession2);
         System.out.println(movieSessionService
                 .findAvailableSessions(1L, LocalDate.of(2020,
@@ -58,5 +63,21 @@ public class Main {
         System.out.println(movieSessionService
                 .findAvailableSessions(2L, LocalDate.of(2020,
                         10, 22)));
+
+        ShoppingCartService shoppingCartService
+                = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+        AuthenticationService authenticationService
+                = (AuthenticationService) injector.getInstance(AuthenticationService.class);
+        UserService userService
+                = (UserService) injector.getInstance(UserService.class);
+
+        User user = authenticationService.register("email", "1234");
+        System.out.println(userService.findByEmail("email"));
+
+        ShoppingCart cart = shoppingCartService.getByUser(user);
+        System.out.println(cart);
+        shoppingCartService.addSession(movieSession1, user);
+        shoppingCartService.clear(cart);
+        System.out.println(shoppingCartService.getByUser(user));
     }
 }
