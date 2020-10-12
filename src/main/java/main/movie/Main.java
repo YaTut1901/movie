@@ -72,7 +72,7 @@ public class Main {
                 = (UserService) injector.getInstance(UserService.class);
 
         User user = authenticationService.register("email", "1234");
-        System.out.println(userService.findByEmail("myemdfail"));
+        System.out.println(userService.findByEmail("email"));
 
         ShoppingCart cart = shoppingCartService.getByUser(user);
         System.out.println(cart);
