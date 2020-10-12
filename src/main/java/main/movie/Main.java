@@ -8,6 +8,7 @@ import main.movie.model.Movie;
 import main.movie.model.MovieSession;
 import main.movie.model.ShoppingCart;
 import main.movie.model.User;
+import main.movie.security.AuthenticationService;
 import main.movie.service.CinemaHallService;
 import main.movie.service.MovieService;
 import main.movie.service.MovieSessionService;
@@ -63,23 +64,16 @@ public class Main {
                 .findAvailableSessions(2L, LocalDate.of(2020,
                         10, 22)));
 
+        ShoppingCartService shoppingCartService
+                = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+        AuthenticationService authenticationService
+                = (AuthenticationService) injector.getInstance(AuthenticationService.class);
         UserService userService
                 = (UserService) injector.getInstance(UserService.class);
 
-        User user = new User();
-        user.setPassword("1234");
-        user.setEmail("myemdfail");
-        userService.add(user);
+        User user = authenticationService.register("email", "1234");
         System.out.println(userService.findByEmail("myemdfail"));
-        User use2r = new User();
-        use2r.setPassword("1234");
-        use2r.setEmail("myemdfails");
-        userService.add(use2r);
-        System.out.println(userService.findByEmail("myemdfails"));
 
-        ShoppingCartService shoppingCartService
-                = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
-        shoppingCartService.registerNewShoppingCart(user);
         ShoppingCart cart = shoppingCartService.getByUser(user);
         System.out.println(cart);
         shoppingCartService.addSession(movieSession1, user);

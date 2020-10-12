@@ -1,7 +1,6 @@
 package main.movie.service.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import main.movie.dao.ShoppingCartDao;
 import main.movie.dao.TicketDao;
 import main.movie.lib.Inject;
@@ -24,7 +23,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Ticket ticket = new Ticket();
         ticket.setUser(user);
         ticket.setMovieSession(movieSession);
-        ticket = ticketDao.create(ticket);
+        ticket = ticketDao.add(ticket);
         ShoppingCart shoppingCart = getByUser(user);
         shoppingCart.getTickets().add(ticket);
         shoppingCartDao.update(shoppingCart);
@@ -39,7 +38,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public void registerNewShoppingCart(User user) {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(user);
-        shoppingCart.setTickets(new ArrayList<>(Collections.emptyList()));
         shoppingCartDao.add(shoppingCart);
     }
 
