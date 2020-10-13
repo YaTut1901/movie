@@ -2,10 +2,12 @@ package main.movie;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import main.movie.lib.Injector;
 import main.movie.model.CinemaHall;
 import main.movie.model.Movie;
 import main.movie.model.MovieSession;
+import main.movie.model.Order;
 import main.movie.model.ShoppingCart;
 import main.movie.model.User;
 import main.movie.security.AuthenticationService;
@@ -75,18 +77,21 @@ public class Main {
         User user = authenticationService.register("email", "1234");
         System.out.println(userService.findByEmail("email"));
 
-        ShoppingCart cart = shoppingCartService.getByUser(user);
-        System.out.println(cart);
+        System.out.println(shoppingCartService.getByUser(user));
         shoppingCartService.addSession(movieSession1, user);
-        shoppingCartService.clear(cart);
         System.out.println(shoppingCartService.getByUser(user));
 
         OrderService orderService
                 = (OrderService) injector.getInstance(OrderService.class);
 
-        orderService.completeOrder(user);
         shoppingCartService.addSession(movieSession2, user);
-        orderService.completeOrder(user);
-        System.out.println(orderService.getOrderHistory(user));
+        ShoppingCart cart = shoppingCartService.getByUser(user);
+        orderService.completeOrder(cart);
+        shoppingCartService.addSession(movieSession1, user);
+        shoppingCartService.addSession(movieSession2, user);
+        cart = shoppingCartService.getByUser(user);
+        orderService.completeOrder(cart);
+        List<Order> list = orderService.getOrderHistory(user);
+        System.out.println(list);
     }
 }

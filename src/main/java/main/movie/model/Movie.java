@@ -44,10 +44,10 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{"
-                + "id=" + id
-                + ", title='" + title + '\''
-                + ", description='" + description + '\''
+        return "Movie{" + "\n"
+                + "id=" + id + "\n"
+                + ", title='" + title + "\n"
+                + ", description='" + description + "\n"
                 + '}';
     }
 }

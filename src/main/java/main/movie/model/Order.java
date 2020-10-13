@@ -56,11 +56,11 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{"
-                + "id=" + id
-                + ", tickets=" + tickets
-                + ", orderDate=" + orderDate
-                + ", user=" + user
+        return "Order{" + "\n"
+                + "id=" + id + "\n"
+                + ", tickets=" + tickets + "\n"
+                + ", orderDate=" + orderDate + "\n"
+                + ", user=" + user + "\n"
                 + '}';
     }
 }

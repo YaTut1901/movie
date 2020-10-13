@@ -37,7 +37,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getByUser(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Order orders "
+            return session.createQuery("SELECT DISTINCT orders FROM Order orders "
                     + "left join fetch orders.tickets "
                     + "WHERE orders.user = :user", Order.class)
                     .setParameter("user", user)
