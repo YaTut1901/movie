@@ -1,6 +1,7 @@
 package main.movie.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import main.movie.dao.OrderDao;
 import main.movie.lib.Inject;
@@ -23,7 +24,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order completeOrder(User user) {
         ShoppingCart cart = shoppingCartService.getByUser(user);
-        List<Ticket> tickets = cart.getTickets();
+        List<Ticket> tickets = new ArrayList<>(cart.getTickets());
         shoppingCartService.clear(cart);
         Order order = new Order();
         order.setOrderDate(LocalDateTime.now());
