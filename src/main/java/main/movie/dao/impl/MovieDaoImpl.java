@@ -6,6 +6,7 @@ import main.movie.exceptions.DataProcessingException;
 import main.movie.lib.Dao;
 import main.movie.model.Movie;
 import main.movie.util.HibernateUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -13,8 +14,11 @@ import org.hibernate.query.Query;
 @Dao
 public class MovieDaoImpl implements MovieDao {
 
+    private static final Logger logger = Logger.getLogger(CinemaHallDaoImpl.class);
+
     @Override
     public Movie add(Movie movie) {
+        logger.info("Movie creating...");
         Transaction transaction = null;
         Session session = null;
         try {
@@ -37,6 +41,7 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
+        logger.info("All Movies getting from DB...");
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Movie> getAllMoviesQuery = session.createQuery("from Movie", Movie.class);
             return getAllMoviesQuery.getResultList();
