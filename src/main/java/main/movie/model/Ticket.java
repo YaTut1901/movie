@@ -44,10 +44,10 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "Ticket{"
-                + "id=" + id
-                + ", movieSession=" + movieSession
-                + ", user=" + user
+        return "Ticket{" + "\n"
+                + "id=" + id + "\n"
+                + ", movieSession=" + movieSession + "\n"
+                + ", user=" + user + "\n"
                 + '}';
     }
 }

@@ -1,22 +1,25 @@
 package main.movie.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "carts")
-public class ShoppingCart {
+@Table(name = "orders")
+public class Order {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToMany
     private List<Ticket> tickets;
-    @MapsId
-    @OneToOne
+    private LocalDateTime orderDate;
+    @ManyToOne
     private User user;
 
     public Long getId() {
@@ -35,6 +38,14 @@ public class ShoppingCart {
         this.tickets = tickets;
     }
 
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
+    }
+
     public User getUser() {
         return user;
     }
@@ -45,9 +56,10 @@ public class ShoppingCart {
 
     @Override
     public String toString() {
-        return "ShoppingCart{" + "\n"
+        return "Order{" + "\n"
                 + "id=" + id + "\n"
                 + ", tickets=" + tickets + "\n"
+                + ", orderDate=" + orderDate + "\n"
                 + ", user=" + user + "\n"
                 + '}';
     }
