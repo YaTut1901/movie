@@ -13,7 +13,6 @@ import org.hibernate.query.Query;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
-
     private static final Logger logger = Logger.getLogger(CinemaHallDaoImpl.class);
 
     @Override
@@ -26,6 +25,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             transaction = session.beginTransaction();
             session.save(cinemaHall);
             transaction.commit();
+            logger.info("CinemaHall successfully created");
             return cinemaHall;
         } catch (Exception e) {
             if (transaction != null) {

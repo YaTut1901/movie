@@ -29,6 +29,7 @@ public class UserDaoImpl implements UserDao {
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
+            logger.info("User successfully created");
             return user;
         } catch (Exception e) {
             if (transaction != null) {

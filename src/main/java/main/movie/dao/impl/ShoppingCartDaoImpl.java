@@ -25,6 +25,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
             transaction = session.beginTransaction();
             session.save(shoppingCart);
             transaction.commit();
+            logger.info("ShoppingCart successfully created");
             return shoppingCart;
         } catch (Exception e) {
             if (transaction != null) {

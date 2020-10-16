@@ -24,6 +24,7 @@ public class TicketDaoImpl implements TicketDao {
             transaction = session.beginTransaction();
             session.save(ticket);
             transaction.commit();
+            logger.info("Ticket successfully created");
             return ticket;
         } catch (Exception e) {
             if (transaction != null) {
