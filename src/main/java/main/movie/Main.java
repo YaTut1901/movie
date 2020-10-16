@@ -17,9 +17,11 @@ import main.movie.service.MovieSessionService;
 import main.movie.service.OrderService;
 import main.movie.service.ShoppingCartService;
 import main.movie.service.UserService;
+import org.apache.log4j.Logger;
 
 public class Main {
 
+    private static final Logger logger = Logger.getLogger(Main.class);
     private static Injector injector = Injector.getInstance("main.movie");
 
     public static void main(String[] args) {
@@ -30,7 +32,8 @@ public class Main {
         Movie movie2 = new Movie();
         movie2.setTitle("Movie2");
         movieService.add(movie2);
-        movieService.getAll().forEach(System.out::println);
+        logger.info("Getting all movies from DB...");
+        movieService.getAll().forEach(logger::info);
 
         CinemaHallService cinemaHallService
                 = (CinemaHallService) injector.getInstance(CinemaHallService.class);
@@ -41,7 +44,8 @@ public class Main {
         CinemaHall cinemaHall2 = new CinemaHall();
         cinemaHall2.setDescription("HALL NUMBER TWO");
         cinemaHallService.add(cinemaHall2);
-        cinemaHallService.getAll().forEach(System.out::println);
+        logger.info("Getting all cinemaHalls from DB...");
+        cinemaHallService.getAll().forEach(logger::info);
 
         MovieSession movieSession1 = new MovieSession();
         movieSession1.setCinemaHall(cinemaHall1);
@@ -59,11 +63,11 @@ public class Main {
         movieSession2.setShowTime(LocalDateTime.of(2020, 10,
                 22, 15, 31));
         movieSessionService.add(movieSession2);
-        System.out.println(movieSessionService
+        logger.info(movieSessionService
                 .findAvailableSessions(1L, LocalDate.of(2020,
                         10, 20)));
 
-        System.out.println(movieSessionService
+        logger.info(movieSessionService
                 .findAvailableSessions(2L, LocalDate.of(2020,
                         10, 22)));
 
@@ -75,11 +79,11 @@ public class Main {
                 = (UserService) injector.getInstance(UserService.class);
 
         User user = authenticationService.register("email", "1234");
-        System.out.println(userService.findByEmail("email"));
+        logger.info(userService.findByEmail("email"));
 
-        System.out.println(shoppingCartService.getByUser(user));
+        logger.info(shoppingCartService.getByUser(user));
         shoppingCartService.addSession(movieSession1, user);
-        System.out.println(shoppingCartService.getByUser(user));
+        logger.info(shoppingCartService.getByUser(user));
 
         OrderService orderService
                 = (OrderService) injector.getInstance(OrderService.class);
@@ -92,6 +96,6 @@ public class Main {
         cart = shoppingCartService.getByUser(user);
         orderService.completeOrder(cart);
         List<Order> list = orderService.getOrderHistory(user);
-        System.out.println(list);
+        logger.info(list);
     }
 }
