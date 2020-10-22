@@ -10,14 +10,18 @@ import main.movie.exceptions.DataProcessingException;
 import main.movie.lib.Dao;
 import main.movie.model.User;
 import main.movie.util.HibernateUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
 public class UserDaoImpl implements UserDao {
 
+    private static final Logger logger = Logger.getLogger(CinemaHallDaoImpl.class);
+
     @Override
     public User add(User user) {
+        logger.info("User creating...");
         Transaction transaction = null;
         Session session = null;
         try {
@@ -25,6 +29,7 @@ public class UserDaoImpl implements UserDao {
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
+            logger.info("User successfully created");
             return user;
         } catch (Exception e) {
             if (transaction != null) {
@@ -40,6 +45,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findByEmail(String email) {
+        logger.info("User getting from DB...");
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);

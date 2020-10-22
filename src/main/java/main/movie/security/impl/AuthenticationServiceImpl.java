@@ -9,9 +9,11 @@ import main.movie.security.AuthenticationService;
 import main.movie.service.ShoppingCartService;
 import main.movie.service.UserService;
 import main.movie.util.HashUtil;
+import org.apache.log4j.Logger;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
+    private static final Logger logger = Logger.getLogger(AuthenticationServiceImpl.class);
     @Inject
     private UserService userService;
     @Inject
@@ -20,6 +22,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User login(String email, String password) throws AuthenticationException {
         Optional<User> optionalUser = userService.findByEmail(email);
+        logger.warn("User is trying to login...");
         if (optionalUser.isEmpty()
                 || !optionalUser.get().getPassword()
                 .equals(HashUtil.hashPassword(password, optionalUser.get().getSalt()))) {
@@ -35,6 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setPassword(password);
         user = userService.add(user);
         shoppingCartService.registerNewShoppingCart(user);
+        logger.info("User have just registered");
         return user;
     }
 }
