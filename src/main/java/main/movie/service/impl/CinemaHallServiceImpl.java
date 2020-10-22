@@ -2,14 +2,14 @@ package main.movie.service.impl;
 
 import java.util.List;
 import main.movie.dao.CinemaHallDao;
-import main.movie.lib.Inject;
-import main.movie.lib.Service;
 import main.movie.model.CinemaHall;
 import main.movie.service.CinemaHallService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CinemaHallServiceImpl implements CinemaHallService {
-    @Inject
+    @Autowired
     private CinemaHallDao cinemaHallDao;
 
     @Override

@@ -3,18 +3,25 @@ package main.movie.dao.impl;
 import java.util.List;
 import main.movie.dao.MovieDao;
 import main.movie.exceptions.DataProcessingException;
-import main.movie.lib.Dao;
 import main.movie.model.Movie;
-import main.movie.util.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class MovieDaoImpl implements MovieDao {
 
     private static final Logger logger = Logger.getLogger(CinemaHallDaoImpl.class);
+    private SessionFactory factory;
+
+    @Autowired
+    public MovieDaoImpl(SessionFactory factory) {
+        this.factory = factory;
+    }
 
     @Override
     public Movie add(Movie movie) {
@@ -22,7 +29,7 @@ public class MovieDaoImpl implements MovieDao {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = factory.openSession();
             transaction = session.beginTransaction();
             session.save(movie);
             transaction.commit();
@@ -43,7 +50,7 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public List<Movie> getAll() {
         logger.info("All Movies getting from DB...");
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = factory.openSession()) {
             Query<Movie> getAllMoviesQuery = session.createQuery("from Movie", Movie.class);
             return getAllMoviesQuery.getResultList();
         }

@@ -2,16 +2,20 @@ package main.movie.service.impl;
 
 import java.util.Optional;
 import main.movie.dao.UserDao;
-import main.movie.lib.Inject;
-import main.movie.lib.Service;
 import main.movie.model.User;
 import main.movie.service.UserService;
 import main.movie.util.HashUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Inject
-    private UserDao userDao;
+    private final UserDao userDao;
+
+    @Autowired
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public User add(User user) {
