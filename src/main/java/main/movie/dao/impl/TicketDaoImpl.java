@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class TicketDaoImpl implements TicketDao {
 
-    private static final Logger logger = Logger.getLogger(CinemaHallDaoImpl.class);
+    private static final Logger logger = Logger.getLogger(TicketDaoImpl.class);
     private final SessionFactory factory;
 
     public TicketDaoImpl(SessionFactory factory) {
