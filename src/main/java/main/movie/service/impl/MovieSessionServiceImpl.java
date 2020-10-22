@@ -5,14 +5,12 @@ import java.util.List;
 import main.movie.dao.MovieSessionDao;
 import main.movie.model.MovieSession;
 import main.movie.service.MovieSessionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MovieSessionServiceImpl implements MovieSessionService {
     private final MovieSessionDao movieSessionDao;
 
-    @Autowired
     public MovieSessionServiceImpl(MovieSessionDao movieSessionDao) {
         this.movieSessionDao = movieSessionDao;
     }

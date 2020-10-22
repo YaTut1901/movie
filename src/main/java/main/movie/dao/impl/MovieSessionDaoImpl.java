@@ -15,16 +15,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class MovieSessionDaoImpl implements MovieSessionDao {
 
     private static final Logger logger = Logger.getLogger(CinemaHallDaoImpl.class);
-    private SessionFactory factory;
+    private final SessionFactory factory;
 
-    @Autowired
     public MovieSessionDaoImpl(SessionFactory factory) {
         this.factory = factory;
     }
