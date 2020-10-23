@@ -9,18 +9,23 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import main.movie.dao.MovieSessionDao;
 import main.movie.exceptions.DataProcessingException;
-import main.movie.lib.Dao;
 import main.movie.model.MovieSession;
-import main.movie.util.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class MovieSessionDaoImpl implements MovieSessionDao {
 
-    private static final Logger logger = Logger.getLogger(CinemaHallDaoImpl.class);
+    private static final Logger logger = Logger.getLogger(MovieSessionDaoImpl.class);
+    private final SessionFactory factory;
+
+    public MovieSessionDaoImpl(SessionFactory factory) {
+        this.factory = factory;
+    }
 
     @Override
     public MovieSession create(MovieSession movieSession) {
@@ -28,7 +33,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         Session session = null;
         Transaction transaction = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = factory.openSession();
             transaction = session.beginTransaction();
             session.save(movieSession);
             transaction.commit();
@@ -49,7 +54,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession get(Long id) {
         logger.info("MovieSession getting from DB...");
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = factory.openSession()) {
             return session.get(MovieSession.class, id);
         }
     }
@@ -57,7 +62,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> getAll() {
         logger.info("All MovieSessions getting from DB...");
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = factory.openSession()) {
             Query<MovieSession> getAllMovieSessionsQuery = session.createQuery(
                     "from MovieSession", MovieSession.class);
             return getAllMovieSessionsQuery.getResultList();
@@ -67,7 +72,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         logger.info("Searching for available sessions...");
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = factory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<MovieSession> query = criteriaBuilder
                     .createQuery(MovieSession.class);

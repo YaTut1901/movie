@@ -7,17 +7,22 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import main.movie.dao.UserDao;
 import main.movie.exceptions.DataProcessingException;
-import main.movie.lib.Dao;
 import main.movie.model.User;
-import main.movie.util.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class UserDaoImpl implements UserDao {
 
-    private static final Logger logger = Logger.getLogger(CinemaHallDaoImpl.class);
+    private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
+    private final SessionFactory factory;
+
+    public UserDaoImpl(SessionFactory factory) {
+        this.factory = factory;
+    }
 
     @Override
     public User add(User user) {
@@ -25,7 +30,7 @@ public class UserDaoImpl implements UserDao {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = factory.openSession();
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
@@ -46,7 +51,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<User> findByEmail(String email) {
         logger.info("User getting from DB...");
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = factory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
             Root<User> root = query.from(User.class);

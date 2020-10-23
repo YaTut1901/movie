@@ -2,22 +2,27 @@ package main.movie.security.impl;
 
 import java.util.Optional;
 import main.movie.exceptions.AuthenticationException;
-import main.movie.lib.Inject;
-import main.movie.lib.Service;
 import main.movie.model.User;
 import main.movie.security.AuthenticationService;
 import main.movie.service.ShoppingCartService;
 import main.movie.service.UserService;
 import main.movie.util.HashUtil;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
     private static final Logger logger = Logger.getLogger(AuthenticationServiceImpl.class);
-    @Inject
-    private UserService userService;
-    @Inject
-    private ShoppingCartService shoppingCartService;
+    private final UserService userService;
+    private final ShoppingCartService shoppingCartService;
+
+    @Autowired
+    public AuthenticationServiceImpl(UserService userService,
+                                     ShoppingCartService shoppingCartService) {
+        this.userService = userService;
+        this.shoppingCartService = shoppingCartService;
+    }
 
     @Override
     public User login(String email, String password) throws AuthenticationException {

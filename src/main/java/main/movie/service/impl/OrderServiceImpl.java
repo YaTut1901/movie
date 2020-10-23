@@ -4,22 +4,24 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import main.movie.dao.OrderDao;
-import main.movie.lib.Inject;
-import main.movie.lib.Service;
 import main.movie.model.Order;
 import main.movie.model.ShoppingCart;
 import main.movie.model.Ticket;
 import main.movie.model.User;
 import main.movie.service.OrderService;
 import main.movie.service.ShoppingCartService;
+import org.springframework.stereotype.Service;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    @Inject
-    private OrderDao orderDao;
-    @Inject
-    private ShoppingCartService shoppingCartService;
+    private final OrderDao orderDao;
+    private final ShoppingCartService shoppingCartService;
+
+    public OrderServiceImpl(OrderDao orderDao, ShoppingCartService shoppingCartService) {
+        this.orderDao = orderDao;
+        this.shoppingCartService = shoppingCartService;
+    }
 
     @Override
     public Order completeOrder(ShoppingCart cart) { 

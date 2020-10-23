@@ -3,18 +3,23 @@ package main.movie.dao.impl;
 import java.util.List;
 import main.movie.dao.OrderDao;
 import main.movie.exceptions.DataProcessingException;
-import main.movie.lib.Dao;
 import main.movie.model.Order;
 import main.movie.model.User;
-import main.movie.util.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class OrderDaoImpl implements OrderDao {
 
-    private static final Logger logger = Logger.getLogger(CinemaHallDaoImpl.class);
+    private static final Logger logger = Logger.getLogger(OrderDaoImpl.class);
+    private final SessionFactory factory;
+
+    public OrderDaoImpl(SessionFactory factory) {
+        this.factory = factory;
+    }
 
     @Override
     public Order add(Order order) {
@@ -22,7 +27,7 @@ public class OrderDaoImpl implements OrderDao {
         Session session = null;
         Transaction transaction = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = factory.openSession();
             transaction = session.beginTransaction();
             session.save(order);
             transaction.commit();
@@ -43,7 +48,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getByUser(User user) {
         logger.info("Orders getting from DB...");
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = factory.openSession()) {
             return session.createQuery("SELECT DISTINCT orders FROM Order orders "
                     + "left join fetch orders.tickets "
                     + "WHERE orders.user = :user", Order.class)
