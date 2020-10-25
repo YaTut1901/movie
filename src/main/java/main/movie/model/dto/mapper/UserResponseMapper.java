@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserResponseMapper {
-
     public User map(UserResponseDto userResponseDto) {
         User user = new User();
         user.setPassword(userResponseDto.getPassword());

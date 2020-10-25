@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MovieSessionResponseMapper {
-
     public static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ISO_DATE_TIME;
 

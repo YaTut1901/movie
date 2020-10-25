@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MovieResponseMapper {
-
     public Movie map(MovieResponseDto movieDto) {
         Movie movie = new Movie();
         movie.setTitle(movieDto.getTitle());
