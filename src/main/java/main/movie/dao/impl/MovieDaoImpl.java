@@ -46,6 +46,14 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
+    public Movie get(Long id) {
+        logger.info("Movie getting from DB...");
+        try (Session session = factory.openSession()) {
+            return session.get(Movie.class, id);
+        }
+    }
+
+    @Override
     public List<Movie> getAll() {
         logger.info("All Movies getting from DB...");
         try (Session session = factory.openSession()) {
