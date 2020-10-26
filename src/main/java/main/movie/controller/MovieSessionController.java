@@ -20,17 +20,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class MovieSessionController {
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     private final MovieSessionService movieSessionService;
-    private final MovieSessionMapper requestMapper;
+    private final MovieSessionMapper movieSessionMapper;
 
     public MovieSessionController(MovieSessionService movieSessionService,
-                                  MovieSessionMapper requestMapper) {
+                                  MovieSessionMapper movieSessionMapper) {
         this.movieSessionService = movieSessionService;
-        this.requestMapper = requestMapper;
+        this.movieSessionMapper = movieSessionMapper;
     }
 
     @PostMapping
     public void addSession(@RequestBody MovieSessionRequestDto movieSessionDto) {
-        movieSessionService.add(requestMapper.map(movieSessionDto));
+        movieSessionService.add(movieSessionMapper.map(movieSessionDto));
     }
 
     @GetMapping("/available")
@@ -38,7 +38,7 @@ public class MovieSessionController {
                                                       @RequestParam String date) {
         return movieSessionService.findAvailableSessions(movieId,
                 LocalDate.parse(date, FORMATTER)).stream()
-                .map(requestMapper::map)
+                .map(movieSessionMapper::map)
                 .collect(Collectors.toList());
     }
 }
