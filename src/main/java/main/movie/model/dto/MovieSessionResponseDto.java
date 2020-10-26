@@ -1,13 +1,11 @@
 package main.movie.model.dto;
 
 public class MovieSessionResponseDto {
+    private Long sessionId;
     private String showTime;
     private int cinemaHallCapacity;
     private Long cinemaHallId;
     private String movieTitle;
-
-    public MovieSessionResponseDto() {
-    }
 
     public String getShowTime() {
         return showTime;
@@ -39,5 +37,13 @@ public class MovieSessionResponseDto {
 
     public void setMovieTitle(String movieTitle) {
         this.movieTitle = movieTitle;
+    }
+
+    public Long getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(Long sessionId) {
+        this.sessionId = sessionId;
     }
 }

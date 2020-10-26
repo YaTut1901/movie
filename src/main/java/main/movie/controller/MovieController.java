@@ -3,6 +3,7 @@ package main.movie.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 import main.movie.model.dto.MovieRequestDto;
+import main.movie.model.dto.MovieResponseDto;
 import main.movie.model.dto.mapper.MovieMapper;
 import main.movie.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class MovieController {
     }
 
     @GetMapping
-    public List<MovieRequestDto> getAllMovies() {
+    public List<MovieResponseDto> getAllMovies() {
         return movieService.getAll().stream()
                 .map(movieMapper::map)
                 .collect(Collectors.toList());

@@ -2,6 +2,7 @@ package main.movie.model.dto.mapper;
 
 import main.movie.model.Movie;
 import main.movie.model.dto.MovieRequestDto;
+import main.movie.model.dto.MovieResponseDto;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,7 +14,7 @@ public class MovieMapper {
         return movie;
     }
 
-    public MovieRequestDto map(Movie movie) {
-        return new MovieRequestDto(movie.getTitle(), movie.getDescription());
+    public MovieResponseDto map(Movie movie) {
+        return new MovieResponseDto(movie.getId(), movie.getTitle(), movie.getDescription());
     }
 }

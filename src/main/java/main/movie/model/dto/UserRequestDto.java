@@ -4,14 +4,6 @@ public class UserRequestDto {
     private String email;
     private String password;
 
-    public UserRequestDto(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
-
-    public UserRequestDto() {
-    }
-
     public String getEmail() {
         return email;
     }
