@@ -1,6 +1,6 @@
 package main.movie.controller;
 
-import main.movie.model.dto.UserResponseDto;
+import main.movie.model.dto.UserRequestDto;
 import main.movie.security.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +18,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public void register(@RequestBody UserResponseDto userDto) {
+    public void register(@RequestBody UserRequestDto userDto) {
         authenticationService.register(userDto.getEmail(), userDto.getPassword());
     }
 }

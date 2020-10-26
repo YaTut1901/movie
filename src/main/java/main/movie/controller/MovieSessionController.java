@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import main.movie.model.dto.MovieSessionRequestDto;
 import main.movie.model.dto.MovieSessionResponseDto;
-import main.movie.model.dto.mapper.MovieSessionRequestMapper;
-import main.movie.model.dto.mapper.MovieSessionResponseMapper;
+import main.movie.model.dto.mapper.MovieSessionMapper;
 import main.movie.service.MovieSessionService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,18 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class MovieSessionController {
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     private final MovieSessionService movieSessionService;
-    private final MovieSessionResponseMapper responseMapper;
-    private final MovieSessionRequestMapper requestMapper;
+    private final MovieSessionMapper requestMapper;
 
     public MovieSessionController(MovieSessionService movieSessionService,
-                                  MovieSessionResponseMapper responseMapper,
-                                  MovieSessionRequestMapper requestMapper) {
+                                  MovieSessionMapper requestMapper) {
         this.movieSessionService = movieSessionService;
-        this.responseMapper = responseMapper;
         this.requestMapper = requestMapper;
     }
 
-    @PostMapping("/new")
+    @PostMapping
     public void addSession(@RequestBody MovieSessionRequestDto movieSessionDto) {
         movieSessionService.add(requestMapper.map(movieSessionDto));
     }
@@ -42,7 +38,7 @@ public class MovieSessionController {
                                                       @RequestParam String date) {
         return movieSessionService.findAvailableSessions(movieId,
                 LocalDate.parse(date, FORMATTER)).stream()
-                .map(responseMapper::map)
+                .map(requestMapper::map)
                 .collect(Collectors.toList());
     }
 }

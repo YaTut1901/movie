@@ -1,15 +1,15 @@
 package main.movie.model.dto;
 
-public class MovieResponseDto {
+public class MovieRequestDto {
     private String title;
     private String description;
 
-    public MovieResponseDto(String title, String description) {
+    public MovieRequestDto(String title, String description) {
         this.title = title;
         this.description = description;
     }
 
-    public MovieResponseDto() {
+    public MovieRequestDto() {
     }
 
     public String getTitle() {

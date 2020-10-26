@@ -40,38 +40,4 @@ public class MovieSessionResponseDto {
     public void setMovieTitle(String movieTitle) {
         this.movieTitle = movieTitle;
     }
-
-    public static Builder newBuilder() {
-        return new MovieSessionResponseDto().new Builder();
-    }
-
-    public class Builder {
-        private Builder() {
-
-        }
-
-        public Builder setShowTime(String showTime) {
-            MovieSessionResponseDto.this.showTime = showTime;
-            return this;
-        }
-
-        public Builder setCinemaHallCapacity(int cinemaHallCapacity) {
-            MovieSessionResponseDto.this.cinemaHallCapacity = cinemaHallCapacity;
-            return this;
-        }
-
-        public Builder setCinemaHallId(Long cinemaHallId) {
-            MovieSessionResponseDto.this.cinemaHallId = cinemaHallId;
-            return this;
-        }
-
-        public Builder setMovieTitle(String movieTitle) {
-            MovieSessionResponseDto.this.movieTitle = movieTitle;
-            return this;
-        }
-
-        public MovieSessionResponseDto build() {
-            return MovieSessionResponseDto.this;
-        }
-    }
 }

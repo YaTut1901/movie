@@ -1,15 +1,15 @@
 package main.movie.model.dto;
 
-public class UserResponseDto {
+public class UserRequestDto {
     private String email;
     private String password;
 
-    public UserResponseDto(String email, String password) {
+    public UserRequestDto(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    public UserResponseDto() {
+    public UserRequestDto() {
     }
 
     public String getEmail() {
