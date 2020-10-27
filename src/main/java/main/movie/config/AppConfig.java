@@ -2,7 +2,6 @@ package main.movie.config;
 
 import java.util.Properties;
 import javax.sql.DataSource;
-import main.movie.model.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,7 +13,9 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 @Configuration
 @ComponentScan(basePackages = {
         "main.movie.dao",
-        "main.movie.service"})
+        "main.movie.service",
+        "main.movie.security",
+        "main.movie.model.dto.mapper"})
 @PropertySource("classpath:db.properties")
 public class AppConfig {
     private final Environment environment;
@@ -42,7 +43,7 @@ public class AppConfig {
         properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
         properties.put("hibernate.dialect", environment.getProperty("hibernate.dialect"));
         factoryBean.setHibernateProperties(properties);
-        factoryBean.setAnnotatedClasses(User.class);
+        factoryBean.setPackagesToScan("main.movie.model");
         return factoryBean;
     }
 }
