@@ -1,12 +1,11 @@
 package main.movie.service.impl;
 
+import java.util.Optional;
 import main.movie.dao.UserDao;
 import main.movie.model.User;
 import main.movie.service.UserService;
 import main.movie.util.HashUtil;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {

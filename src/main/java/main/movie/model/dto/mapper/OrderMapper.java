@@ -1,11 +1,10 @@
 package main.movie.model.dto.mapper;
 
+import java.util.stream.Collectors;
 import main.movie.model.Order;
 import main.movie.model.dto.OrderResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.stream.Collectors;
 
 @Component
 public class OrderMapper {

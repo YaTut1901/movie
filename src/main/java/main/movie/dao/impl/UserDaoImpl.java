@@ -7,7 +7,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import main.movie.dao.UserDao;
 import main.movie.exceptions.DataProcessingException;
-import main.movie.model.Movie;
 import main.movie.model.User;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;

@@ -1,7 +1,5 @@
 package main.movie.model.dto;
 
-import main.movie.model.Ticket;
-
 import java.time.LocalDateTime;
 import java.util.List;
 

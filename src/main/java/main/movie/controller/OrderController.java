@@ -1,5 +1,7 @@
 package main.movie.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import main.movie.model.dto.OrderResponseDto;
 import main.movie.model.dto.ShoppingCartRequestDto;
 import main.movie.model.dto.mapper.OrderMapper;
@@ -11,9 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/orders")

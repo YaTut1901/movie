@@ -1,8 +1,7 @@
 package main.movie.service;
 
-import main.movie.model.User;
-
 import java.util.Optional;
+import main.movie.model.User;
 
 public interface UserService {
     User add(User user);
