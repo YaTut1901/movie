@@ -7,6 +7,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import main.movie.dao.UserDao;
 import main.movie.exceptions.DataProcessingException;
+import main.movie.model.Movie;
 import main.movie.model.User;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -57,6 +58,14 @@ public class UserDaoImpl implements UserDao {
             Root<User> root = query.from(User.class);
             Predicate emailPredicate = criteriaBuilder.equal(root.get("email"), email);
             return session.createQuery(query.where(emailPredicate)).uniqueResultOptional();
+        }
+    }
+
+    @Override
+    public Optional<User> get(Long id) {
+        logger.info("User getting from DB...");
+        try (Session session = factory.openSession()) {
+            return Optional.of(session.get(User.class, id));
         }
     }
 }

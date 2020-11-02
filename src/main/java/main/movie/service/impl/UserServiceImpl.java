@@ -1,11 +1,12 @@
 package main.movie.service.impl;
 
-import java.util.Optional;
 import main.movie.dao.UserDao;
 import main.movie.model.User;
 import main.movie.service.UserService;
 import main.movie.util.HashUtil;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,5 +26,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findByEmail(String email) {
         return userDao.findByEmail(email);
+    }
+
+    @Override
+    public User get(Long id) {
+        return userDao.get(id).orElseThrow();
     }
 }
